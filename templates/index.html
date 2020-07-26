@@ -1,0 +1,147 @@
+
+{% extends 'base.html' %}
+
+{% block title %} Listado de Productos {% endblock title %}
+
+{% block content %}
+
+<div class="container">
+  
+  <div class="modal fade" id="updateModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <form class="modal-content" action="{% url 'App:putProducts' %}" method="POST" enctype="multipart/form-data">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <p>Actualizar Producto</p>
+            {% csrf_token %}
+            <input type="hidden" id="id" name="id">
+            <input class="form-control mt-2" id="category" name="category" placeholder="Categoria">
+            <input class="form-control mt-2" id="description" name="description" placeholder="Descripcion">
+            <input class="form-control mt-2" id="identification" type="number" name="identification" placeholder="Identificacion">
+            <input class="form-control mt-2" id="initdate" type="date"name="initdate" placeholder="Fecha de inicio">
+            <input class="form-control mt-2" id="productname" name="productname" placeholder="Nombre del producto">
+            <input class="form-control mt-2" id="value" type="number" name="value" placeholder="Valor">
+        </div>
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-primary">Guardar Producto</button>
+          <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
+        </div>
+      </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+  <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <form class="modal-content" action="{% url 'App:deleteProducts' %}" method="POST" enctype="multipart/form-data">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="deleteModalLabel">Eliminar Producto</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          {% csrf_token %}
+          <input type="hidden" id="idDelete" name="id">
+          ¿Esta seguro de eliminar este producto?
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-info" data-dismiss="modal">Cancelar</button>
+          <button type="submit" class="btn btn-danger">Eliminar</button>
+        </div>
+      </div>
+    </form>
+    </div>
+  </div>
+    
+  <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <form class="modal-content" action="{% url 'App:postResponseProducts' %}" method="POST" enctype="multipart/form-data">
+        <div class="modal-header">
+          <h5 class="modal-title">Agregar Producto</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <p>Por favor ingrese un nuevo producto.</p>
+            {% csrf_token %}
+            <input id="category" class="form-control mt-2" name="category" placeholder="Categoria">
+            <input class="form-control mt-2" name="description" placeholder="Descripcion">
+            <input class="form-control mt-2" type="number" name="identification" placeholder="Identificacion">
+            <input class="form-control mt-2" type="date"name="initdate" placeholder="Fecha de inicio">
+            <input class="form-control mt-2" name="productname" placeholder="Nombre del producto">
+            <input class="form-control mt-2" type="number" name="value" placeholder="Valor">
+        </div>
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-primary">Guardar Producto</button>
+          <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
+        </div>
+      </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container">
+  <h1 class="text-center">Listado de productos -  Valor total: {{sumvalue}} </h1>  
+  <div class="row justify-content-center">
+     <div class="col-12">
+      <table class="table table-hover table-bordered">
+        <thead class="thead-dark">
+          <tr>
+            <th scope="col">Id</th>
+            <th scope="col">Categoria</th>
+            <th scope="col">Descripcion</th>
+            <th scope="col">Fecha de inicio</th>
+            <th scope="col">Nombre del producto</th>
+            <th scope="col">Valor</th>
+            <th colspan="2" scope="col-2" class="text-center"> <Button class="btn btn-primary text-center" data-toggle="modal" data-target="#exampleModal">Agregar Producto</Button></th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for tt in arrayJson %}
+          
+          <tr style="cursor: pointer;" data-toggle="modal" data-target="#idemodal">
+            <th scope="row">{{tt.0}}</th>
+            <td>{{tt.1.category}}</td>
+            <td>{{tt.1.description}}</td>
+            <td>{{tt.1.initdate}}</td>
+            <td>{{tt.1.productname}}</td>
+            <td>{{tt.1.value}}</td>
+            <td>
+              <Button data-toggle="modal" data-target="#updateModal" class="btn btn-info" onclick=
+                "
+                document.getElementById('id').value = '{{tt.0}}'
+                document.getElementById('category').value = '{{tt.1.category}}'
+                document.getElementById('description').value = '{{tt.1.description}}'
+                document.getElementById('identification').value = '{{tt.1.identification}}'
+                document.getElementById('initdate').value = '{{tt.1.initdate}}'
+                document.getElementById('productname').value = '{{tt.1.productname}}'
+                document.getElementById('value').value = '{{tt.1.value}}'
+                "   
+                >
+                Actualizar</Button>
+            </td>
+            <td>
+              <Button class="btn btn-danger" onclick="document.getElementById('idDelete').value = '{{tt.0}}'" data-toggle="modal" data-target="#deleteModal">Eliminar</Button>
+            </td>
+          </tr>
+
+          {% endfor %}
+
+        </tbody>
+      </table>
+
+     </div>
+  </div>
+
+
+</div>
+{% endblock %}
