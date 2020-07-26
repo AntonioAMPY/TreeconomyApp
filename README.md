@@ -5,11 +5,7 @@
 
 Django Treeconomy, nos permite realizar un CRUD completo sobre el consumo de una API de productos, adicionalmente nos permite hacer una sumatoria de todos estos productos.
 
-  - Type some Markdown on the left
-  - See HTML in the right
-  - Magic
-
-# Nuevas mejoras!
+# Funcionalidades!
 
   - Visualización de la información en una tabla de Boostrap 4
   - Botones y modal para hacer las peticiones (Crear, Actualizar, Eliminar)
@@ -23,7 +19,7 @@ Dillinger uses a number of open source projects to work properly:
 * [Python Request] - Libreria para hacer peticiones http.
 
 
-### Installation
+### Instalación
 
 TreeconomyApp necesita [Python](https://www.python.org/downloads/release/python-3611/) 3+ para funcionar..
 
