@@ -25,19 +25,22 @@ TreeconomyApp necesita [Python](https://www.python.org/downloads/release/python-
 
 Instalar el archivo de requeriments dentro del proyecto (es necesario pip)
 
+![](images/installpackets.png)
+
 ```sh
-$ cd TreeconomyProject
 $ pip install -r requeriments.txt
-$ manage.py runserver
 ```
+
 
 ## Run server local
 Para correr la aplicacion es necesario instalar los requerimientos y hacer los siguiente comandos:
 
+![](images/runserver.png)
+![](images/runserverotherport.png)
+
 ```sh
-$ cd TreeconomyProject
-$ manage.py makemigrations
-$ manage.py migrate
+$ manage.py runserver
+$ manage.py runserver 0.0.0.0:port
 ```
 
 
